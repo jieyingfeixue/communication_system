@@ -1,0 +1,31 @@
+﻿<Application x:Class="CommunicationSystem.Desktop.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:CommunicationSystem.Desktop.Converters"
+             StartupUri="Views/LoginWindow.xaml"
+             ShutdownMode="OnLastWindowClose">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/ModernTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <conv:BoolToVisibilityConverter x:Key="BoolToVis"/>
+            <conv:InverseBoolToVisibilityConverter x:Key="BoolToVisInverse"/>
+            <conv:OnlineColorConverter x:Key="OnlineColor"/>
+            <conv:OnlineTextConverter x:Key="OnlineText"/>
+            <conv:MineBackgroundConverter x:Key="MineBg"/>
+            <conv:MineForegroundConverter x:Key="MineFg"/>
+            <conv:MineMetaForegroundConverter x:Key="MineMetaFg"/>
+            <conv:MineAlignConverter x:Key="MineAlign"/>
+            <conv:MineBubbleBrushConverter x:Key="MineBubble"/>
+            <conv:TheirBubbleBrushConverter x:Key="TheirBubble"/>
+            <conv:MineColumnConverter x:Key="MineColumn"/>
+            <conv:TheirBorderConverter x:Key="TheirBorder"/>
+            <conv:UnreadCountToVisibilityConverter x:Key="UnreadBadgeVis"/>
+            <conv:UnreadCountDisplayConverter x:Key="UnreadCountText"/>
+            <conv:UrlToImageConverter x:Key="UrlToImage"/>
+            <conv:MessageTypeVisibilityConverter x:Key="MsgTypeVis"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

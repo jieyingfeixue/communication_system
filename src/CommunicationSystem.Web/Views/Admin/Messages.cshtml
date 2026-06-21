@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "消息管理";
+    Layout = "_Layout";
+}
+
+<h4>交流信息管理</h4>
+<div class="row mb-3">
+    <div class="col-md-4"><input id="kw" class="form-control" placeholder="关键词" /></div>
+    <div class="col-md-2"><button class="btn btn-primary" onclick="load()">查询</button></div>
+</div>
+<table class="table table-sm table-bordered">
+    <thead><tr><th>ID</th><th>发送人</th><th>内容</th><th>时间</th><th>操作</th></tr></thead>
+    <tbody id="tbody"></tbody>
+</table>
+
+@section Scripts {
+<script>
+async function load() {
+    const kw = document.getElementById('kw').value;
+    const msgs = await fetch(`/Admin/MessageList?keyword=${encodeURIComponent(kw)}`).then(r => r.json());
+    document.getElementById('tbody').innerHTML = msgs.map(m => `<tr>
+        <td>${m.id}</td><td>${m.senderNickname}</td>
+        <td style="max-width:400px;word-break:break-all">${m.content}</td>
+        <td>${new Date(m.createTime).toLocaleString()}</td>
+        <td><button class="btn btn-sm btn-danger" onclick="del(${m.id})">删除</button></td>
+    </tr>`).join('');
+}
+async function del(id) { if(confirm('确认删除？')) { await fetch(`/Admin/DeleteMessage?id=${id}`, {method:'DELETE'}); load(); } }
+load();
+</script>
+}

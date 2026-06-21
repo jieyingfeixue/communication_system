@@ -1,0 +1,48 @@
+@{
+    ViewData["Title"] = "用户管理";
+    Layout = "_Layout";
+}
+
+<h4>用户管理</h4>
+<div class="row mb-3">
+    <div class="col-md-3"><input id="kw" class="form-control" placeholder="用户名/昵称" /></div>
+    <div class="col-md-2">
+        <select id="status" class="form-select">
+            <option value="">全部状态</option>
+            <option value="0">待审批</option>
+            <option value="1">正常</option>
+            <option value="2">已禁用</option>
+        </select>
+    </div>
+    <div class="col-md-2"><button class="btn btn-primary" onclick="load()">查询</button></div>
+</div>
+<table class="table table-striped">
+    <thead><tr><th>ID</th><th>用户名</th><th>昵称</th><th>状态</th><th>在线</th><th>操作</th></tr></thead>
+    <tbody id="tbody"></tbody>
+</table>
+
+@section Scripts {
+<script>
+const statusMap = {0:'待审批',1:'正常',2:'已禁用'};
+async function load() {
+    const kw = document.getElementById('kw').value;
+    const st = document.getElementById('status').value;
+    let url = `/Admin/UserList?username=${encodeURIComponent(kw)}`;
+    if (st !== '') url += `&status=${st}`;
+    const users = await fetch(url).then(r => r.json());
+    document.getElementById('tbody').innerHTML = users.map(u => `<tr>
+        <td>${u.id}</td><td>${u.username}</td><td>${u.nickname}</td>
+        <td>${statusMap[u.status]}</td><td>${u.isOnline?'在线':'离线'}</td>
+        <td>
+            ${u.status===0?`<button class="btn btn-sm btn-success" onclick="approve(${u.id},true)">通过</button>
+            <button class="btn btn-sm btn-warning" onclick="approve(${u.id},false)">拒绝</button>`:''}
+            ${u.status===1?`<button class="btn btn-sm btn-danger" onclick="disable(${u.id})">禁用</button>`:''}
+            ${u.status===2?`<button class="btn btn-sm btn-info" onclick="enable(${u.id})">解禁</button>`:''}
+        </td></tr>`).join('');
+}
+async function approve(id, ok) { await fetch(`/Admin/Approve?userId=${id}&approve=${ok}`, {method:'POST'}); load(); }
+async function disable(id) { await fetch(`/Admin/Disable?userId=${id}`, {method:'POST'}); load(); }
+async function enable(id) { await fetch(`/Admin/Enable?userId=${id}`, {method:'POST'}); load(); }
+load();
+</script>
+}

@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - 网上沟通交流系统</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-primary mb-3">
+        <div class="container-fluid">
+            <span class="navbar-brand">网上沟通交流系统</span>
+            <div class="d-flex gap-2">
+                @if (Context.Session.IsLoggedIn())
+                {
+                    <span class="navbar-text text-white">@Context.Session.GetString("Nickname")</span>
+                    @if (Context.Session.IsAdmin())
+                    {
+                        <a class="btn btn-sm btn-outline-light" asp-controller="Admin" asp-action="Users">用户管理</a>
+                        <a class="btn btn-sm btn-outline-light" asp-controller="Admin" asp-action="Messages">消息管理</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-sm btn-outline-light" asp-controller="Chat" asp-action="Index">聊天</a>
+                    }
+                    <a class="btn btn-sm btn-light" asp-controller="Account" asp-action="Logout">退出</a>
+                }
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid px-3">
+        @RenderBody()
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

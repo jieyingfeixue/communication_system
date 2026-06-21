@@ -1,0 +1,27 @@
+<Window x:Class="CommunicationSystem.Desktop.Views.InviteGroupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="邀请好友入群" Height="420" Width="400"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Background="{StaticResource BgBrush}">
+    <Border Style="{StaticResource CardBorder}" Margin="20">
+        <StackPanel>
+            <TextBlock Text="邀请好友入群" Style="{StaticResource TitleText}" FontSize="18" Margin="0,0,0,16"/>
+            <ListBox ItemsSource="{Binding Friends}" Style="{StaticResource ModernListBox}"
+                     ItemContainerStyle="{StaticResource ModernListBoxItem}" MaxHeight="260">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding Friend.Nickname}" FontSize="13"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <TextBlock Text="{Binding StatusMessage}" Foreground="{StaticResource DangerBrush}" Margin="0,10,0,0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+                <Button Content="取消" Style="{StaticResource SecondaryButton}" Width="90" Margin="0,0,10,0"
+                        Command="{Binding CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                <Button Content="邀请" Style="{StaticResource PrimaryButton}" Width="90"
+                        Command="{Binding InviteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

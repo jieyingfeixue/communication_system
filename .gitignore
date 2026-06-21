@@ -1,0 +1,25 @@
+## Visual Studio
+bin/
+obj/
+.vs/
+*.user
+
+## Build
+[Dd]ebug/
+[Rr]elease/
+
+## Uploads
+src/CommunicationSystem.Api/wwwroot/uploads/*
+!src/CommunicationSystem.Api/wwwroot/uploads/.gitkeep
+
+## IDE
+.idea/
+*.suo
+
+## OS
+Thumbs.db
+.DS_Store
+
+## Secrets
+appsettings.*.local.json
+**/appsettings.Development.json

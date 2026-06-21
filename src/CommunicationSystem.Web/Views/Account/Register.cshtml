@@ -1,0 +1,36 @@
+@{
+    ViewData["Title"] = "注册";
+    Layout = "_Layout";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <h4 class="card-title text-center mb-4">用户注册</h4>
+                @if (ViewBag.Message != null)
+                {
+                    <div class="alert @(ViewBag.Success == true ? "alert-success" : "alert-warning")">@ViewBag.Message</div>
+                }
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label">用户名</label>
+                        <input name="Username" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">昵称</label>
+                        <input name="Nickname" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">密码</label>
+                        <input name="Password" type="password" class="form-control" required />
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">提交注册申请</button>
+                </form>
+                <div class="text-center mt-3">
+                    <a asp-action="Login">已有账号？去登录</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

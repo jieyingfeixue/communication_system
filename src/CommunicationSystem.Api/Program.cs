@@ -66,11 +66,17 @@ builder.Services.AddSingleton<Microsoft.AspNetCore.SignalR.IUserIdProvider, Comm
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
+try
 {
+    using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     if (await db.Database.CanConnectAsync())
         await db.SeedAsync();
+}
+catch (Exception ex)
+{
+    var logger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("Startup");
+    logger.LogWarning(ex, "启动时无法连接数据库，API 仍会运行；登录前请检查数据库与连接字符串。");
 }
 
 if (app.Environment.IsDevelopment())
